@@ -1,0 +1,10 @@
+import { Field, Int, ObjectType } from '@nestjs/graphql';
+
+@ObjectType()
+export class User {
+  @Field({ description: 'ID dari tukang ayam'})
+  id: number;
+
+  @Field({ description: 'Nama dari tukang ayam' })
+  username: string;
+}
