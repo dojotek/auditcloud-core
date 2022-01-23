@@ -1,30 +1,30 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { GraphQLModule } from '@nestjs/graphql';
+
+import * as path from 'path';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './users/user.entity';
-import { ProjectsController } from './projects/projects.controller';
-import { HeadlinesController } from './headlines/headlines.controller';
-import { ControlsController } from './controls/controls.controller';
-import { NotesController } from './notes/notes.controller';
-import { DocumentsController } from './documents/documents.controller';
-import { TodosController } from './todos/todos.controller';
-import { ExportsController } from './exports/exports.controller';
+
+import { DatabaseModule } from './database/database.module';
+import { UsersModule } from './users/users.module';
+import { ProjectsModule } from './projects/projects.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'root',
-      database: 'test',
-      autoLoadEntities: true,
-      synchronize: true
-    })
+    GraphQLModule.forRoot({
+      debug: true,
+      playground: true,
+      autoSchemaFile: path.join(process.cwd(), 'src/schema.gql'),
+      sortSchema: true,
+    }),
+    DatabaseModule,
+    UsersModule,
+    ProjectsModule,
   ],
-  controllers: [AppController, ProjectsController, HeadlinesController, ControlsController, NotesController, DocumentsController, TodosController, ExportsController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
