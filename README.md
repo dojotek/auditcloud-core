@@ -14,6 +14,19 @@
 $ npm install
 ```
 
+## Database Schema
+
+```bash
+# create new migration file
+typeorm migration:create -n <MigrationName>
+
+# apply migrations
+make migration/run
+
+# revert migrations
+make migration/revert
+```
+
 ## Running the app
 
 ```bash
